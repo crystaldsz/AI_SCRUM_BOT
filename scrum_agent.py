@@ -14,31 +14,33 @@ import pandas as pd
 
 from pinecone import Pinecone, ServerlessSpec
 from sentence_transformers import SentenceTransformer
-
+import streamlit as st
+from requests.auth import HTTPBasicAuth
+import genai
+import os 
 # --------------------------------------------------------------------------------
 # 1) Load environment variables and configure APIs
 # --------------------------------------------------------------------------------
-load_dotenv()
 
-# MongoDB Configuration
-MONGO_URI = os.getenv(
-    "MONGO_URI")
+
+# Access secrets using st.secrets
+MONGO_URI = st.secrets["MONGO"]["URI"]
 
 # JIRA Configuration
-JIRA_URL = os.getenv("JIRA_URL")
-JIRA_EMAIL = os.getenv("JIRA_EMAIL")
-JIRA_API_TOKEN = os.getenv("JIRA_API_TOKEN")
+JIRA_URL = st.secrets["JIRA"]["URL"]
+JIRA_EMAIL = st.secrets["JIRA"]["EMAIL"]
+JIRA_API_TOKEN = st.secrets["JIRA"]["API_TOKEN"]
 jira_auth = HTTPBasicAuth(JIRA_EMAIL, JIRA_API_TOKEN)
 jira_headers = {"Accept": "application/json"}
 
 # Gemini Configuration
-genai.configure(api_key=os.getenv("GEMINI_API_KEY"))
+genai.configure(api_key=st.secrets["GEMINI"]["API_KEY"])
 model = genai.GenerativeModel('gemini-2.0-flash')
 
 # Pinecone Configuration
-PINECONE_API_KEY = os.getenv("PINECONE_API_KEY")
-PINECONE_ENVIRONMENT = os.getenv("PINECONE_ENVIRONMENT")
-PINECONE_INDEX_NAME = "scrum-bot-index"
+PINECONE_API_KEY = st.secrets["PINECONE"]["API_KEY"]
+PINECONE_ENVIRONMENT = st.secrets["PINECONE"]["ENVIRONMENT"]
+PINECONE_INDEX_NAME = st.secrets["PINECONE"]["INDEX_NAME"]
 
 # --------------------------------------------------------------------------------
 # 1.1) Initialize Pinecone and Embedding Model
