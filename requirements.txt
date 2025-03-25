@@ -14,7 +14,3 @@ torch
 pinecone
 pydantic
 jinja2
-Flask==3.0.0
-langchain-google-genai==0.0.9
-python-dotenv==1.0.0
-
