@@ -16,7 +16,6 @@ from pinecone import Pinecone, ServerlessSpec
 from sentence_transformers import SentenceTransformer
 import streamlit as st
 from requests.auth import HTTPBasicAuth
-import genai
 import os 
 # --------------------------------------------------------------------------------
 # 1) Load environment variables and configure APIs
